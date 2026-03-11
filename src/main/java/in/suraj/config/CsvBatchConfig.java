@@ -71,13 +71,13 @@ public class CsvBatchConfig {
         return lineMapper;
     }
 
-    // Processor
+    // create a Processor
     @Bean
     public CustomerProcessor customerProcessor() {
         return new CustomerProcessor();
     }
 
-    // Writer
+    // Writer 
     @Bean
     public RepositoryItemWriter<Customer> customerWriter() {
 
@@ -88,7 +88,7 @@ public class CsvBatchConfig {
         return writer;
     }
 
-    // Step
+    // create Step
     @Bean
     public Step step1() {
 
@@ -97,17 +97,17 @@ public class CsvBatchConfig {
                 .reader(customerReader())
                 .processor(customerProcessor())
                 .writer(customerWriter())
-                //.taskExecutor(taskExecutor())  // this method is multitasking   work
+                //.taskExecutor(taskExecutor())  // this method is multitasking working  
                 .build();
     }
 
     private TaskExecutor taskExecutor() {
 		SimpleAsyncTaskExecutor executor = new SimpleAsyncTaskExecutor();
-		executor.setConcurrencyLimit(10); // 10 Thread processes  
+		executor.setConcurrencyLimit(10); // 10 Thread processes at a time 
 		return executor;
 	}
 
-	// Job
+	// create Job
     @Bean
     public Job job() {
 
